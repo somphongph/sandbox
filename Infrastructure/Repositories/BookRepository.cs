@@ -30,7 +30,5 @@ namespace Infrastructure.Repositories
         {
             await _books.InsertOneAsync(book);
         }
-
-
     }
 }

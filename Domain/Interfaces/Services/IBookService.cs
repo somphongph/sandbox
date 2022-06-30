@@ -4,6 +4,7 @@ namespace Domain.Interfaces.Services
 {
     public interface IBookService
     {
-         Task<IEnumerable<Book>> List();
+        Task<IEnumerable<Book>> ListBookAsync();
+        Task AddBookAsync(Book book);
     }
 }
