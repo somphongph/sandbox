@@ -1,4 +1,6 @@
-using Domain.Models;
+
+using Domain.Entities;
+using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -8,10 +10,13 @@ namespace API.Controllers;
 public class BooksController : ControllerBase
 {
     private readonly ILogger<BooksController> _logger;
+    private readonly IBookService _bookService;
 
-    public BooksController(ILogger<BooksController> logger)
+
+    public BooksController(ILogger<BooksController> logger, IBookService bookService)
     {
         _logger = logger;
+        _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
     }
 
     [HttpGet]
@@ -47,19 +52,9 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
-    public IEnumerable<Book> Post()
+    public async void Post(Book book)
     {
-        return new List<Book>()
-        {
-            new Book(){
-                Name = "book 1",
-                Title = "Title 1"
-            },
-            new Book(){
-                Name = "Books 2",
-                Title = "Title 2"
-            }
-        };
+        await _bookService.AddBookAsync(book);
     }
 
     [HttpPut]

@@ -7,7 +7,7 @@ namespace Domain.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = string.Empty;
+        public string Id { get; set; } = String.Empty;
         public string Name { get; set; } = String.Empty;
         public string Title { get; set; } = String.Empty;
     }
