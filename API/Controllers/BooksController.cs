@@ -29,4 +29,68 @@ public class BooksController : ControllerBase
             }
         };
     }
+
+    [HttpGet]
+    public IEnumerable<Book> GetList()
+    {
+        return new List<Book>()
+        {
+            new Book(){
+                Name = "book 1",
+                Title = "Title 1"
+            },
+            new Book(){
+                Name = "Books 2",
+                Title = "Title 2"
+            }
+        };
+    }
+
+    [HttpPost]
+    public IEnumerable<Book> Post()
+    {
+        return new List<Book>()
+        {
+            new Book(){
+                Name = "book 1",
+                Title = "Title 1"
+            },
+            new Book(){
+                Name = "Books 2",
+                Title = "Title 2"
+            }
+        };
+    }
+
+    [HttpPut]
+    public IEnumerable<Book> Put()
+    {
+        return new List<Book>()
+        {
+            new Book(){
+                Name = "book 1",
+                Title = "Title 1"
+            },
+            new Book(){
+                Name = "Books 2",
+                Title = "Title 2"
+            }
+        };
+    }
+
+    [HttpDelete]
+    public IEnumerable<Book> Delete()
+    {
+        return new List<Book>()
+        {
+            new Book(){
+                Name = "book 1",
+                Title = "Title 1"
+            },
+            new Book(){
+                Name = "Books 2",
+                Title = "Title 2"
+            }
+        };
+    }
 }
