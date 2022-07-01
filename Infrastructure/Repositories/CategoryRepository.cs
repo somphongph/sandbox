@@ -16,23 +16,40 @@ namespace Infrastructure.Repositories
 
             _categories = database.GetCollection<Category>("Categories");
         }
+
         public async Task<Category> GetByIdAsync(string id)
         {
             return await _categories
                 .Find(p => p.Id == id)
                 .FirstOrDefaultAsync();
         }
+
         public async Task<IEnumerable<Category>> GetListAsync()
         {
             return await _categories
                 .Find(_ => true)
                 .ToListAsync();
         }
-        public async Task AddAsync(Category category)
+
+        public async Task AddAsync(Category obj)
         {
-            // book.SetCreated(_accessor.GetUserId());
-            await _categories
-                .InsertOneAsync(category);
+            await _categories.InsertOneAsync(obj);
+        }
+
+        public async Task<bool> UpdateAsync(Category obj)
+        {
+            var result = await _categories.ReplaceOneAsync(p => p.Id == obj.Id, obj);
+
+            return result.IsAcknowledged
+                    && result.ModifiedCount > 0;
+        }
+
+        public async Task<bool> DeleteAsync(Category obj)
+        {
+            var result = await _categories.ReplaceOneAsync(p => p.Id == obj.Id, obj);
+
+            return result.IsAcknowledged
+                    && result.ModifiedCount > 0;
         }
     }
 }

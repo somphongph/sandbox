@@ -1,7 +1,8 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
-using Domain.Models;
+using Domain.Models.Request;
+using Domain.Models.Response;
 
 namespace Domain.Services
 {
@@ -11,17 +12,6 @@ namespace Domain.Services
         public CategoryService(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-        }
-
-        public async Task AddAsync(CategoryRequest req)
-        {
-            var category = new Category()
-            {
-                Name = req.Name,
-                Title = req.Title,
-            };
-
-            await _categoryRepository.AddAsync(category);
         }
 
         public async Task<CategoryResponse> GetByIdAsync(string id)
@@ -35,9 +25,25 @@ namespace Domain.Services
             };
         }
 
-        public async Task<IEnumerable<Category>> ListAsync()
+        public async Task<IEnumerable<CategoryResponse>> GetListAsync()
         {
-            return await _categoryRepository.GetListAsync();
+            var books = await _categoryRepository.GetListAsync();
+            return books.Select(b => new CategoryResponse()
+            {
+                Name = b.Name.ToString(),
+                Title = b.Title
+            });
+        }
+
+        public async Task AddAsync(CategoryRequest req)
+        {
+            var category = new Category()
+            {
+                Name = req.Name,
+                Title = req.Title,
+            };
+
+            await _categoryRepository.AddAsync(category);
         }
     }
 }

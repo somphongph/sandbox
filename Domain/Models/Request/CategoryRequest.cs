@@ -1,6 +1,4 @@
-using Domain.Entities;
-
-namespace Domain.Models
+namespace Domain.Models.Request
 {
     public class CategoryRequest
     {

@@ -1,6 +1,6 @@
-using Domain.Entities;
 using Domain.Interfaces.Services;
-using Domain.Models;
+using Domain.Models.Request;
+using Domain.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -26,9 +26,9 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<Category>> GetList()
+    public async Task<IEnumerable<CategoryResponse>> GetList()
     {
-        return await _categoryService.ListAsync();
+        return await _categoryService.GetListAsync();
     }
 
     [HttpPost]

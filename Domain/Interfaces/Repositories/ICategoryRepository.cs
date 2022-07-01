@@ -6,6 +6,8 @@ namespace Domain.Interfaces.Repositories
     {
         Task<Category> GetByIdAsync(string id);
         Task<IEnumerable<Category>> GetListAsync();
-        Task AddAsync(Category category);
+        Task AddAsync(Category obj);
+        Task<bool> UpdateAsync(Category obj);
+        Task<bool> DeleteAsync(Category obj);
     }
 }

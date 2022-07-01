@@ -1,3 +1,5 @@
+using Domain.Models;
+
 namespace Domain.Entities
 {
     public class Category : BaseEntity
