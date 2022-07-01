@@ -24,11 +24,14 @@ namespace Infrastructure.Repositories
         }
         public async Task<IEnumerable<Book>> GetListAsync()
         {
-            return await _books.Find(_ => true).ToListAsync();
+            return await _books
+                .Find(_ => true)
+                .ToListAsync();
         }
         public async Task AddAsync(Book book)
         {
-            await _books.InsertOneAsync(book);
+            await _books
+                .InsertOneAsync(book);
         }
     }
 }
