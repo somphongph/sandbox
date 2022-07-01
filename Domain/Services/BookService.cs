@@ -13,8 +13,14 @@ namespace Domain.Services
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
         }
 
-        public async Task AddBookAsync(Book book)
+        public async Task AddBookAsync(BookRequest bookRequest)
         {
+            var book = new Book()
+            {
+                Name = bookRequest.Name,
+                Title = bookRequest.Title,
+            };
+
             await _bookRepository.AddAsync(book);
         }
 
