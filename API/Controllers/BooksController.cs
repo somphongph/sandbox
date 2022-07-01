@@ -2,6 +2,8 @@
 using Domain.Entities;
 using Domain.Interfaces.Services;
 using Domain.Models;
+using Domain.Services.Books.Commands.AddBook;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -12,11 +14,13 @@ public class BooksController : ControllerBase
 {
     private readonly ILogger<BooksController> _logger;
     private readonly IBookService _bookService;
+    private readonly IMediator _mediator;
 
 
-    public BooksController(ILogger<BooksController> logger, IBookService bookService)
+    public BooksController(ILogger<BooksController> logger, IMediator mediator, IBookService bookService)
     {
         _logger = logger;
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
     }
 
@@ -32,10 +36,18 @@ public class BooksController : ControllerBase
         return await _bookService.ListBookAsync();
     }
 
+    // [HttpPost]
+    // public async void Post(BookRequest book)
+    // {
+    //     await _bookService.AddBookAsync(book);
+    // }
+
     [HttpPost]
-    public async void Post(Book book)
+    public async Task<ActionResult> Post(AddBookCommand command)
     {
-        await _bookService.AddBookAsync(book);
+        var res = await _mediator.Send(command);
+
+        return CreatedAtAction(null, res);
     }
 
     // [HttpPut]

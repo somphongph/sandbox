@@ -7,6 +7,6 @@ namespace Domain.Interfaces.Services
     {
         Task<BookResponse> GetByIdAsync(string id);
         Task<IEnumerable<Book>> ListBookAsync();
-        Task AddBookAsync(Book book);
+        Task AddBookAsync(BookRequest book);
     }
 }

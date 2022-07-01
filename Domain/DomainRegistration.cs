@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using MediatR;
+using Domain.Services.Books.Commands.AddBook;
 using Domain.Interfaces.Services;
 using Domain.Services;
 
@@ -10,7 +12,10 @@ namespace Domain
         {
             #region Repositories dependency injection
             services.AddScoped<IBookService, BookService>();
+            #endregion
 
+            #region MediatR
+            services.AddMediatR(typeof(AddBookCommandHandler));
             #endregion
 
             return services;
