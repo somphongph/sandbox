@@ -11,7 +11,7 @@ namespace Domain
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
             #region Repositories dependency injection
-            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             #endregion
 
             #region MediatR
