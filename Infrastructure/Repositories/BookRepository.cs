@@ -30,6 +30,7 @@ namespace Infrastructure.Repositories
         }
         public async Task AddAsync(Book book)
         {
+            // book.SetCreated(_accessor.GetUserId());
             await _books
                 .InsertOneAsync(book);
         }

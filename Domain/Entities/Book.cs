@@ -3,12 +3,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Entities
 {
-    public class Book
+    public class Book : BaseEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = String.Empty;
-        public Locale? Name { get; set; }
+        public Locale Name { get; set; } = new Locale();
         public string Title { get; set; } = String.Empty;
     }
 }
