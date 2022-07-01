@@ -1,26 +1,13 @@
-using Domain.Interfaces.Repositories;
-using Domain.Interfaces.Services;
-using Domain.Services;
-using Infrastructure.Repositories;
-using Infrastructure.Settings;
-using Microsoft.Extensions.Options;
+using Domain;
+using Domain.Middleware;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-#region  MongoDB
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection(nameof(MongoDbSettings))); //หรือใช้ builder.Configuration.GetSection("MongoDbSettings"));
-
-builder.Services.AddSingleton<IMongoDbSettings>(sp =>
-    sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+#region Service Register & Dependency Injection
+builder.Services.AddDomainServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 #endregion
-
-
-builder.Services.AddScoped<IBookService, BookService>();
-builder.Services.AddScoped<IBookRepository, BookRepository>();
-
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -41,5 +28,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<RequestCultureMiddleware>();
 
 app.Run();
