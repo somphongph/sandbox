@@ -19,36 +19,16 @@ public class BooksController : ControllerBase
         _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
     }
 
-    [HttpGet]
-    public IEnumerable<Book> Get()
+    [HttpGet("{id}")]
+    public async Task<Book> Get(string id)
     {
-        return new List<Book>()
-        {
-            new Book(){
-                Name = "book 1",
-                Title = "Title 1"
-            },
-            new Book(){
-                Name = "Books 2",
-                Title = "Title 2"
-            }
-        };
+        return await _bookService.GetByIdAsync(id);
     }
 
     [HttpGet]
-    public IEnumerable<Book> GetList()
+    public async Task<IEnumerable<Book>> GetList()
     {
-        return new List<Book>()
-        {
-            new Book(){
-                Name = "book 1",
-                Title = "Title 1"
-            },
-            new Book(){
-                Name = "Books 2",
-                Title = "Title 2"
-            }
-        };
+        return await _bookService.ListBookAsync();
     }
 
     [HttpPost]
@@ -57,35 +37,35 @@ public class BooksController : ControllerBase
         await _bookService.AddBookAsync(book);
     }
 
-    [HttpPut]
-    public IEnumerable<Book> Put()
-    {
-        return new List<Book>()
-        {
-            new Book(){
-                Name = "book 1",
-                Title = "Title 1"
-            },
-            new Book(){
-                Name = "Books 2",
-                Title = "Title 2"
-            }
-        };
-    }
+    // [HttpPut]
+    // public IEnumerable<Book> Put()
+    // {
+    //     return new List<Book>()
+    //     {
+    //         new Book(){
+    //             Name = "book 1",
+    //             Title = "Title 1"
+    //         },
+    //         new Book(){
+    //             Name = "Books 2",
+    //             Title = "Title 2"
+    //         }
+    //     };
+    // }
 
-    [HttpDelete]
-    public IEnumerable<Book> Delete()
-    {
-        return new List<Book>()
-        {
-            new Book(){
-                Name = "book 1",
-                Title = "Title 1"
-            },
-            new Book(){
-                Name = "Books 2",
-                Title = "Title 2"
-            }
-        };
-    }
+    // [HttpDelete]
+    // public IEnumerable<Book> Delete()
+    // {
+    //     return new List<Book>()
+    //     {
+    //         new Book(){
+    //             Name = "book 1",
+    //             Title = "Title 1"
+    //         },
+    //         new Book(){
+    //             Name = "Books 2",
+    //             Title = "Title 2"
+    //         }
+    //     };
+    // }
 }

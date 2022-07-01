@@ -17,6 +17,11 @@ namespace Domain.Services
             await _bookRepository.AddAsync(book);
         }
 
+        public async Task<Book> GetByIdAsync(string id)
+        {
+            return await _bookRepository.GetByIdAsync(id);
+        }
+
         public async Task<IEnumerable<Book>> ListBookAsync()
         {
             return await _bookRepository.GetListAsync();

@@ -8,7 +8,7 @@ namespace Domain.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = String.Empty;
-        public string Name { get; set; } = String.Empty;
+        public Locale? Name { get; set; }
         public string Title { get; set; } = String.Empty;
     }
 }
