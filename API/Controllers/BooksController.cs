@@ -1,6 +1,7 @@
 
 using Domain.Entities;
 using Domain.Interfaces.Services;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -20,7 +21,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<Book> Get(string id)
+    public async Task<BookResponse> Get(string id)
     {
         return await _bookService.GetByIdAsync(id);
     }

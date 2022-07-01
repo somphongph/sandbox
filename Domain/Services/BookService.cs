@@ -1,6 +1,7 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
+using Domain.Models;
 
 namespace Domain.Services
 {
@@ -17,9 +18,15 @@ namespace Domain.Services
             await _bookRepository.AddAsync(book);
         }
 
-        public async Task<Book> GetByIdAsync(string id)
+        public async Task<BookResponse> GetByIdAsync(string id)
         {
-            return await _bookRepository.GetByIdAsync(id);
+            var book = await _bookRepository.GetByIdAsync(id);
+
+            return new BookResponse()
+            {
+                Name = book.Name.ToString(),
+                Title = book.Title,
+            };
         }
 
         public async Task<IEnumerable<Book>> ListBookAsync()

@@ -1,4 +1,5 @@
 using Domain;
+using Domain.Middleware;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,5 +28,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<RequestCultureMiddleware>();
 
 app.Run();

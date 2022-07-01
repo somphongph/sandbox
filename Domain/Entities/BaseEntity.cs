@@ -11,15 +11,15 @@ namespace Domain.Entities
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime CreatedOn { get; set; }
-        public string? CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = String.Empty;
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime UpdatedOn { get; set; }
-        public string? UpdatedBy { get; set; }
+        public string UpdatedBy { get; set; } = String.Empty;
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime? DeletedOn { get; set; }
-        public string? DeletedBy { get; set; }
+        public string DeletedBy { get; set; } = String.Empty;
 
         public void SetCreated()
         {
