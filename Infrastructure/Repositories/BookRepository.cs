@@ -24,11 +24,20 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetListAsync()
+        public async Task<IEnumerable<Book>> GetListAsync(FilterDefinition<Book> filter, int pageNo, int pageSize)
         {
             return await _books
-                .Find(_ => true)
+                .Find(filter)
+                .Skip((pageNo - 1) * pageSize)
+                .Limit(pageSize)
                 .ToListAsync();
+        }
+
+        public async Task<long> GetCountAsync(FilterDefinition<Book> filter)
+        {
+            return await _books
+                .Find(filter)
+                .CountDocumentsAsync();
         }
 
         public async Task AddAsync(Book obj)
