@@ -27,8 +27,8 @@ namespace Domain.Services
 
         public async Task<IEnumerable<CategoryResponse>> GetListAsync()
         {
-            var books = await _categoryRepository.GetListAsync();
-            return books.Select(b => new CategoryResponse()
+            var categories = await _categoryRepository.GetCacheListAsync();
+            return categories.Select(b => new CategoryResponse()
             {
                 Name = b.Name.ToString(),
                 Title = b.Title
