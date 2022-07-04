@@ -21,6 +21,7 @@ namespace Infrastructure
 
             #region Repositories dependency injection
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             #endregion
 
             return services;
