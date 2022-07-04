@@ -1,10 +1,11 @@
+using Domain.Models.common;
 using MediatR;
 
 namespace Domain.Services.Books.Queries.GetBookList
 {
-    public class GetBookListQuery : IRequest<IEnumerable<GetBookListResponse>>
+    public class GetBookListQuery : IRequest<QueryListResponse<GetBookListResponse>>
     {
-        public int PageIndex { get; set; }
+        public int PageNo { get; set; }
         public int PageSize { get; set; }
     }
 }

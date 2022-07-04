@@ -1,3 +1,4 @@
+using Domain.Models.common;
 using Domain.Services.Books.Commands.AddBook;
 using Domain.Services.Books.Queries.GetBookList;
 using MediatR;
@@ -25,16 +26,10 @@ public class BooksController : ControllerBase
     // }
 
     [HttpGet]
-    public async Task<IEnumerable<GetBookListResponse>> GetList([FromQuery] GetBookListQuery query)
+    public async Task<QueryListResponse<GetBookListResponse>> GetList([FromQuery] GetBookListQuery query)
     {
         return await _mediator.Send(query);
     }
-
-    // [HttpPost]
-    // public async void Post(BookRequest book)
-    // {
-    //     await _bookService.AddBookAsync(book);
-    // }
 
     [HttpPost]
     public async Task<ActionResult> Post(AddBookCommand command)

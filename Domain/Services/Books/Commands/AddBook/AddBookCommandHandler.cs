@@ -1,11 +1,12 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
+using Domain.Models.common;
 using MediatR;
 
 namespace Domain.Services.Books.Commands.AddBook
 {
-    public class AddBookCommandHandler : IRequestHandler<AddBookCommand, AddBookResponse>
+    public class AddBookCommandHandler : IRequestHandler<AddBookCommand, CommandResponse>
     {
         private readonly IBookRepository _bookRepository;
 
@@ -14,7 +15,7 @@ namespace Domain.Services.Books.Commands.AddBook
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
         }
 
-        public async Task<AddBookResponse> Handle(AddBookCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(AddBookCommand request, CancellationToken cancellationToken)
         {
             // Add Post
             var book = new Book()
@@ -31,10 +32,9 @@ namespace Domain.Services.Books.Commands.AddBook
             await _bookRepository.AddAsync(book);
 
             // Response
-            return new AddBookResponse()
+            return new CommandResponse()
             {
-                Name = book.Name.ToString(),
-                Title = book.Title
+                Id = book.Id
             };
         }
     }

@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using Domain.Models.common;
 using MediatR;
 
 namespace Domain.Services.Books.Commands.AddBook
 {
-    public class AddBookCommand : IRequest<AddBookResponse>
+    public class AddBookCommand : IRequest<CommandResponse>
     {
         [Required]
         public string NameTh { get; set; } = String.Empty;

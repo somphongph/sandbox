@@ -1,11 +1,12 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
+using Domain.Models.common;
 using MediatR;
 using MongoDB.Driver;
 
 namespace Domain.Services.Books.Queries.GetBookList
 {
-    public class GetBookListHandler : IRequestHandler<GetBookListQuery, IEnumerable<GetBookListResponse>>
+    public class GetBookListHandler : IRequestHandler<GetBookListQuery, QueryListResponse<GetBookListResponse>>
     {
         private readonly IBookRepository _bookRepository;
 
@@ -18,7 +19,7 @@ namespace Domain.Services.Books.Queries.GetBookList
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
         }
 
-        public async Task<IEnumerable<GetBookListResponse>> Handle(GetBookListQuery request, CancellationToken cancellationToken)
+        public async Task<QueryListResponse<GetBookListResponse>> Handle(GetBookListQuery request, CancellationToken cancellationToken)
         {
             var builder = Builders<Book>.Filter;
             var filter = builder.Empty;
@@ -26,7 +27,7 @@ namespace Domain.Services.Books.Queries.GetBookList
             // Post
             var bookListResponse = new List<GetBookListResponse>();
 
-            var books = await _bookRepository.GetListAsync();
+            var books = await _bookRepository.GetListAsync(filter, request.PageNo, request.PageSize);
 
             foreach (var p in books)
             {
@@ -40,12 +41,14 @@ namespace Domain.Services.Books.Queries.GetBookList
                 bookListResponse.Add(postResponse);
             }
 
-            return bookListResponse;
-            // return new GetBookListResponse()
-            // {
-            //     Data = bookListResponse,
-            //     IsCached = false
-            // };
+            return new QueryListResponse<GetBookListResponse>()
+            {
+                IsCached = false,
+                Data = bookListResponse,
+                Total = await _bookRepository.GetCountAsync(filter),
+                PageNo = request.PageNo,
+                PageSize = request.PageSize
+            };
         }
     }
 }
