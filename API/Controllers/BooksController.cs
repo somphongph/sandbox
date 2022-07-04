@@ -30,12 +30,6 @@ public class BooksController : ControllerBase
         return await _mediator.Send(query);
     }
 
-    // [HttpPost]
-    // public async void Post(BookRequest book)
-    // {
-    //     await _bookService.AddBookAsync(book);
-    // }
-
     [HttpPost]
     public async Task<ActionResult> Post(AddBookCommand command)
     {
