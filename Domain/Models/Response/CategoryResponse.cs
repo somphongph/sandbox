@@ -1,6 +1,6 @@
-namespace Domain.Models
+namespace Domain.Models.Response
 {
-    public class BookResponse
+    public class CategoryResponse
     {
         public string Name { get; set; } = String.Empty;
         public string Title { get; set; } = String.Empty;

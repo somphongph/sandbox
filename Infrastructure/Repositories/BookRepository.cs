@@ -16,23 +16,40 @@ namespace Infrastructure.Repositories
 
             _books = database.GetCollection<Book>("Books");
         }
+
         public async Task<Book> GetByIdAsync(string id)
         {
             return await _books
                 .Find(p => p.Id == id)
                 .FirstOrDefaultAsync();
         }
+
         public async Task<IEnumerable<Book>> GetListAsync()
         {
             return await _books
                 .Find(_ => true)
                 .ToListAsync();
         }
-        public async Task AddAsync(Book book)
+
+        public async Task AddAsync(Book obj)
         {
-            // book.SetCreated(_accessor.GetUserId());
-            await _books
-                .InsertOneAsync(book);
+            await _books.InsertOneAsync(obj);
+        }
+
+        public async Task<bool> UpdateAsync(Book obj)
+        {
+            var result = await _books.ReplaceOneAsync(p => p.Id == obj.Id, obj);
+
+            return result.IsAcknowledged
+                    && result.ModifiedCount > 0;
+        }
+
+        public async Task<bool> DeleteAsync(Book obj)
+        {
+            var result = await _books.ReplaceOneAsync(p => p.Id == obj.Id, obj);
+
+            return result.IsAcknowledged
+                    && result.ModifiedCount > 0;
         }
     }
 }

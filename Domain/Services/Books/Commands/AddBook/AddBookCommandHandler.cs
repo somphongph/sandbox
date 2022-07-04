@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
+using Domain.Models;
 using MediatR;
 
 namespace Domain.Services.Books.Commands.AddBook

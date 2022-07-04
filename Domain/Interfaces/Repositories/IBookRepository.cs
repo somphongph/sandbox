@@ -6,6 +6,8 @@ namespace Domain.Interfaces.Repositories
     {
         Task<Book> GetByIdAsync(string id);
         Task<IEnumerable<Book>> GetListAsync();
-        Task AddAsync(Book book);
+        Task AddAsync(Book obj);
+        Task<bool> UpdateAsync(Book obj);
+        Task<bool> DeleteAsync(Book obj);
     }
 }

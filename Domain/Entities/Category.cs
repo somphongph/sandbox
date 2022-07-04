@@ -1,8 +1,8 @@
-using Domain.Entities;
+using Domain.Models;
 
-namespace Domain.Models
+namespace Domain.Entities
 {
-    public class BookRequest
+    public class Category : BaseEntity
     {
         public Locale Name { get; set; } = new Locale();
         public string Title { get; set; } = String.Empty;
