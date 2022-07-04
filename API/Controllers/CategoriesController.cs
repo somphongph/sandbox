@@ -35,38 +35,4 @@ public class CategoriesController : ControllerBase
     {
         await _categoryService.AddAsync(book);
     }
-
-
-
-    // [HttpPut]
-    // public IEnumerable<Book> Put()
-    // {
-    //     return new List<Book>()
-    //     {
-    //         new Book(){
-    //             Name = "book 1",
-    //             Title = "Title 1"
-    //         },
-    //         new Book(){
-    //             Name = "Books 2",
-    //             Title = "Title 2"
-    //         }
-    //     };
-    // }
-
-    // [HttpDelete]
-    // public IEnumerable<Book> Delete()
-    // {
-    //     return new List<Book>()
-    //     {
-    //         new Book(){
-    //             Name = "book 1",
-    //             Title = "Title 1"
-    //         },
-    //         new Book(){
-    //             Name = "Books 2",
-    //             Title = "Title 2"
-    //         }
-    //     };
-    // }
 }
