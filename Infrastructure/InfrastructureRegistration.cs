@@ -19,6 +19,16 @@ namespace Infrastructure
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             #endregion
 
+            #region Redis
+            var rd = configuration.GetSection(nameof(RedisDbSettings)).Get<RedisDbSettings>();
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = rd.ConnectionString;
+                options.InstanceName = rd.DatabaseName;
+            });
+            #endregion
+
             #region Repositories dependency injection
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

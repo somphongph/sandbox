@@ -1,3 +1,4 @@
+using System.Net;
 using Domain.Models.common;
 using Domain.Services.Books.Commands.AddBook;
 using Domain.Services.Books.Queries.GetBookList;
@@ -26,13 +27,17 @@ public class BooksController : ControllerBase
     // }
 
     [HttpGet]
-    public async Task<QueryListResponse<GetBookListResponse>> GetList([FromQuery] GetBookListQuery query)
+    [ProducesResponseType(typeof(QueryListResponse<GetBookListResponse>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetList([FromQuery] GetBookListQuery query)
     {
-        return await _mediator.Send(query);
+        var res = await _mediator.Send(query);
+
+        return Ok(res);
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post(AddBookCommand command)
+    [ProducesResponseType(typeof(CommandResponse), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> Post(AddBookCommand command)
     {
         var res = await _mediator.Send(command);
 
