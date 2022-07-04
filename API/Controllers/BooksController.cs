@@ -1,4 +1,5 @@
 using Domain.Services.Books.Commands.AddBook;
+using Domain.Services.Books.Queries.GetBookList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,6 @@ public class BooksController : ControllerBase
 {
     private readonly ILogger<BooksController> _logger;
     private readonly IMediator _mediator;
-
 
     public BooksController(ILogger<BooksController> logger, IMediator mediator)
     {
@@ -24,11 +24,11 @@ public class BooksController : ControllerBase
     //     return await _bookService.GetByIdAsync(id);
     // }
 
-    // [HttpGet]
-    // public async Task<IEnumerable<Book>> GetList()
-    // {
-    //     return await _bookService.ListBookAsync();
-    // }
+    [HttpGet]
+    public async Task<IEnumerable<GetBookListResponse>> GetList([FromQuery] GetBookListQuery query)
+    {
+        return await _mediator.Send(query);
+    }
 
     // [HttpPost]
     // public async void Post(BookRequest book)

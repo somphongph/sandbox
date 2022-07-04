@@ -12,7 +12,6 @@ public class CategoriesController : ControllerBase
     private readonly ILogger<CategoriesController> _logger;
     private readonly ICategoryService _categoryService;
 
-
     public CategoriesController(ILogger<CategoriesController> logger, ICategoryService categoryService)
     {
         _logger = logger;
