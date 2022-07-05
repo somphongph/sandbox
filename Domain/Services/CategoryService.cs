@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Domain.Interfaces.CacheRepositories;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
 using Domain.Models.Request;
@@ -9,6 +10,7 @@ namespace Domain.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+
         public CategoryService(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));

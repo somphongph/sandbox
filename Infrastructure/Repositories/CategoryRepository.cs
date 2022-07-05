@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Domain.Entities;
+using Domain.Interfaces.CacheRepositories;
 using Domain.Interfaces.Repositories;
 using Infrastructure.Settings;
 using Microsoft.Extensions.Caching.Distributed;
@@ -10,15 +11,15 @@ namespace Infrastructure.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly IMongoCollection<Category> _categories;
-        private readonly IDistributedCache _distributedCache;
+        private readonly IRedisRepository _redisRepository;
 
-        public CategoryRepository(IMongoDbSettings settings, IDistributedCache distributedCache)
+        public CategoryRepository(IMongoDbSettings settings, IRedisRepository redisRepository)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
             _categories = database.GetCollection<Category>("Categories");
-            _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
+            _redisRepository = redisRepository ?? throw new ArgumentNullException(nameof(redisRepository));
         }
 
         public async Task<Category> GetByIdAsync(string id)
@@ -30,23 +31,11 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Category>> GetCacheListAsync()
         {
-            var cacheKey = $"-category";
-            var cached = await _distributedCache.GetStringAsync(cacheKey);
+            var categories = await GetListAsync();
 
-            if (String.IsNullOrEmpty(cached))
-            {
-                var cate = await GetListAsync();
-                var redisData = JsonSerializer.Serialize(cate.ToList());
-                var options = new DistributedCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
+            var result = await _redisRepository.AddCacheLongAsync("categories", categories);
 
-                await _distributedCache.SetStringAsync(cacheKey, redisData, options);
-
-                cached = redisData;
-            }
-            var res = JsonSerializer.Deserialize<List<Category>>(cached);
-
-            return res ?? new List<Category>();
+            return result ?? new List<Category>();
         }
 
         public async Task<IEnumerable<Category>> GetListAsync()

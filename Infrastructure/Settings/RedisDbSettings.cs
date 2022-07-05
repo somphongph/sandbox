@@ -4,5 +4,7 @@ namespace Infrastructure.Settings
     {
         public string ConnectionString { get; set; } = String.Empty;
         public string DatabaseName { get; set; } = String.Empty;
+        public int ExpireShort { get; set; }
+        public int ExpireLong { get; set; }
     }
 }
