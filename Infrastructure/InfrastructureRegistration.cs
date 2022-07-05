@@ -4,6 +4,9 @@ using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Domain.Interfaces.CacheRepositories;
+using Infrastructure.CacheRepository;
+using Domain.Entities;
 
 namespace Infrastructure
 {
@@ -20,19 +23,25 @@ namespace Infrastructure
             #endregion
 
             #region Redis
-            var rd = configuration.GetSection(nameof(RedisDbSettings)).Get<RedisDbSettings>();
+            var redisDbSettings = configuration.GetSection(nameof(RedisDbSettings)).Get<RedisDbSettings>();
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = rd.ConnectionString;
-                options.InstanceName = rd.DatabaseName;
+                options.Configuration = redisDbSettings.ConnectionString;
+                options.InstanceName = redisDbSettings.DatabaseName;
             });
+            #endregion
+
+            #region Cache
+            // services.AddSingleton<IRedisRepository, RedisRepository>();
             #endregion
 
             #region Repositories dependency injection
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             #endregion
+
+
 
             return services;
         }
